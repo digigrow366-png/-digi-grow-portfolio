@@ -1,0 +1,3 @@
+# Scroll hero frame sequence
+Place extracted frames here: frame_001.jpg, frame_002.jpg, ...
+See §5.0 in the master loop prompt for generation instructions.

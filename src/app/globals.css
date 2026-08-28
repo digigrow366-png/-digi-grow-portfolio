@@ -1,0 +1,177 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── DESIGN SYSTEM ─── §1 of master loop prompt ─── */
+/* Every color/font token is a CSS custom property sourced from the database
+   via useTheme(). The values below are fallbacks only — never hardcode a
+   hex value in a component, always read the var. */
+
+@layer base {
+  :root {
+    /* Brand palette — seeded from head.md, overwritten at runtime by useTheme() */
+    --color-primary: #C72E1E;     /* Signal Crimson — CTAs, active states, cursor accent */
+    --color-background: #080808;  /* Obsidian Black — dark sections, hero, cursor blend base */
+    --color-surface: #F7F3EB;     /* Antique Cream — light sections, bento cards */
+    --color-text: #F4F4F5;        /* Near-white — body copy on dark */
+    --color-muted: #A1A1AA;       /* Zinc-400 equivalent — secondary text, labels */
+
+    /* Typography tokens — runtime-swappable from admin Theme editor */
+    --font-heading: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Shadcn/ui tokens mapped to the brand palette */
+    --background: 0 0% 3.1%;
+    --foreground: 240 5% 96%;
+    --card: 0 0% 7%;
+    --card-foreground: 240 5% 96%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 240 5% 96%;
+    --primary: 5 74% 45%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 240 4% 65%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 100% / 8%;
+    --input: 0 0% 100% / 15%;
+    --ring: 5 74% 45%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Dark mode is the default — tokens above are already dark.
+       This class is defined for explicit toggling if needed later. */
+    --background: 0 0% 3.1%;
+    --foreground: 240 5% 96%;
+  }
+}
+
+/* ─── TYPOGRAPHY SYSTEM ─── */
+@layer base {
+  html {
+    font-family: var(--font-heading);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+  }
+
+  /* Headings: font-heading, extrabold/black, tight tracking */
+  h1, h2, h3 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--color-text);
+  }
+
+  h1 {
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+
+  /* Border reset for shadcn compatibility */
+  * {
+    border-color: hsl(var(--border));
+  }
+}
+
+/* ─── UTILITY CLASSES ─── */
+@layer components {
+  /* Micro-labels, badges, "01 / 02" numbering */
+  .badge-label {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.35em;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  /* Bento card base — dark neo-brutalist style */
+  .bento-card {
+    background: rgba(9, 9, 11, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Glassmorphic navbar base */
+  .glass-nav {
+    background: rgba(8, 8, 8, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* Soft radial glow for depth behind panels */
+  .radial-glow {
+    background: radial-gradient(
+      ellipse at center,
+      rgba(199, 46, 30, 0.08) 0%,
+      transparent 70%
+    );
+  }
+
+  /* Stat/metric numbers — heading font, ultra-bold, scaled up */
+  .stat-number {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--color-text);
+  }
+}
+
+/* ─── CURSOR ─── */
+/* Cursor hiding is now handled dynamically in CustomCursor.tsx */
+
+/* ─── REDUCED MOTION ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── TEXT UTILITIES ─── */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary), #ff6b4a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
