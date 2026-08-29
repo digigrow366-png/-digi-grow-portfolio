@@ -64,7 +64,7 @@ export function StickyStackSection({
   }
 
   return (
-    <div ref={ref} className="relative w-full h-[150dvh]">
+    <div ref={ref} className="relative w-full h-[115dvh] lg:h-[150dvh]">
       <div className="sticky top-4 md:top-8 h-[92dvh] w-full z-10 flex items-center justify-center">
         <motion.div
           style={{

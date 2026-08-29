@@ -58,12 +58,17 @@
     font-family: var(--font-heading);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   body {
     background-color: var(--color-background);
     color: var(--color-text);
     line-height: 1.6;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
   }
 
   /* Headings: font-heading, extrabold/black, tight tracking */
@@ -87,6 +92,14 @@
 
 /* ─── UTILITY CLASSES ─── */
 @layer components {
+  /* Container layout to limit max width safely */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
   /* Micro-labels, badges, "01 / 02" numbering */
   .badge-label {
     font-family: var(--font-mono);

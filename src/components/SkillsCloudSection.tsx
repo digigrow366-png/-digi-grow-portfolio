@@ -73,7 +73,7 @@ export function SkillsCloudSection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full border border-white/[0.08] pointer-events-none" />
 
       {/* Section Typography */}
-      <div className="text-center mb-10 relative z-10 px-4 mt-8">
+      <div className="text-center mb-4 md:mb-10 relative z-10 px-4 mt-2 md:mt-8">
         <div className="flex justify-center mb-2">
           <NothingDotText text="SYSTEM ACTIVE" variant="white" size="sm" />
         </div>
@@ -90,46 +90,37 @@ export function SkillsCloudSection() {
         </p>
       </div>
 
-      {/* Core Display Area - Added padding bottom to lift it from the edge */}
-      <div className="relative w-full max-w-6xl mx-auto flex items-center justify-center h-[350px] md:h-[450px] px-4 md:px-8 pb-20 md:pb-32">
+      {/* Core Display Area */}
+      <div className="relative w-full max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-center md:justify-between px-4 md:px-12 gap-8 md:gap-4 pb-12">
         
-        {/* Floating Tool Badges (Spread wide to the left and right) */}
-        {floatingBadges.map((badge) => (
-          <motion.div
-            key={badge.id}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className={`absolute z-20 ${badge.position}`}
-          >
+        {/* Left Side: Tech Badges (Tools) */}
+        <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 w-full md:w-1/2 z-20">
+          {floatingBadges.map((badge) => (
             <motion.div
-              animate={{ y: [-12, 12, -12] }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: badge.delay,
-              }}
-              className="flex items-center gap-3 px-4 py-2.5 rounded-full bg-zinc-950/80 border border-zinc-800 backdrop-blur-md shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all hover:border-zinc-600 hover:scale-105 cursor-default"
+              key={badge.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.4, delay: badge.delay * 0.2 }}
+              className="flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-zinc-950/80 border border-zinc-800 backdrop-blur-md shadow-lg transition-all hover:border-zinc-600 hover:scale-105 cursor-default"
             >
               <div className="p-1 rounded-full flex items-center justify-center bg-zinc-900 border border-zinc-800">
                 {badge.icon}
               </div>
-              <span className={`text-xs md:text-sm font-semibold tracking-widest uppercase pr-2 whitespace-nowrap ${ndotFont.className}`} style={{ color: "var(--color-primary)" }}>
+              <span className={`text-[11px] md:text-xs font-semibold tracking-widest uppercase pr-1 ${ndotFont.className}`} style={{ color: "var(--color-primary)" }}>
                 {badge.title}
               </span>
             </motion.div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
 
-        {/* 3D Sphere Display (Scaled Down) */}
+        {/* Right Side: 3D Sphere Display */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative z-30 flex items-center justify-center w-[300px] h-[300px] md:w-[380px] md:h-[380px]"
+          className="relative z-30 flex items-center justify-center w-full md:w-1/2 aspect-square max-w-[240px] md:max-w-[450px]"
         >
           <TechIconCloud />
         </motion.div>

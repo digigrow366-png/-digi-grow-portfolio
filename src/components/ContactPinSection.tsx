@@ -101,10 +101,17 @@ export function ContactPinSection() {
     return "";
   };
 
+  const getPinText = (id: number) => {
+    const href = getHref(id);
+    if (href === "#") return contactLinks.find(c => c.id === id)?.pinText || "";
+    if (href.startsWith("mailto:")) return href.replace("mailto:", "");
+    return href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+  };
+
   return (
-    <section id="contact" className="relative w-full py-32 bg-black overflow-hidden select-none">
+    <section id="contact" className="relative w-full py-16 md:py-32 bg-black overflow-hidden select-none">
       {/* Background Ambient Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-red-600/10 blur-[140px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] md:w-[600px] h-[350px] bg-red-600/10 blur-[140px] pointer-events-none rounded-full" />
 
       {/* Header */}
       <motion.div 
@@ -131,7 +138,7 @@ export function ContactPinSection() {
       </motion.div>
 
       {/* 4 Pin Cards Staggered Grid */}
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-28 gap-x-6 place-items-center relative z-10">
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 md:gap-y-28 gap-x-6 place-items-center relative z-10">
         {contactLinks.map((item, index) => (
           <motion.div
             key={item.id}
@@ -145,7 +152,7 @@ export function ContactPinSection() {
             }}
             className="h-[23rem] w-full flex items-center justify-center"
           >
-            <PinContainer title={item.pinText} href={getHref(item.id) !== '#' ? getHref(item.id) : item.href}>
+            <PinContainer title={getPinText(item.id)} href={getHref(item.id) !== '#' ? getHref(item.id) : item.href}>
               <div className="flex basis-full flex-col p-5 tracking-tight text-slate-100/50 w-[17rem] h-[19rem] bg-zinc-950/80 border border-zinc-800/90 rounded-2xl backdrop-blur-md justify-between group/card transition-all duration-300 hover:shadow-xl hover:border-zinc-700 active:scale-95 cursor-pointer">
                 <div>
                   <div className="flex items-center justify-between">

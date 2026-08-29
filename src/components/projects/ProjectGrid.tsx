@@ -80,20 +80,20 @@ export default function ProjectGrid() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-8 md:pb-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {projects.map((p, idx) => (
-            <Link key={p.id} href={`/work/${p.slug}`} passHref>
+            <Link key={p.id} href={`/work/${p.slug}`} className="shrink-0 snap-center w-[80vw] sm:w-[50vw] md:w-auto h-auto block">
               <motion.div
                 data-cursor-hover
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="h-full block"
+                transition={{ duration: 0.5, delay: Math.min(idx, 5) * 0.1 }}
+                className="h-auto block"
               >
                 <CometCard className="h-full group">
                 <div 
-                  className="bento-card rounded-xl overflow-hidden h-full relative transition-all duration-500 hover:border-white/20"
+                  className="bento-card rounded-xl overflow-hidden relative transition-all duration-500 hover:border-white/20 flex flex-col h-full"
                   style={{ backgroundColor: "color-mix(in srgb, var(--color-primary) 2%, #09090b)" }}
                 >
                   {/* Hover glow effect */}
@@ -108,6 +108,7 @@ export default function ProjectGrid() {
                         alt={p.title}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         loading="lazy"
+                        decoding="async"
                       />
                     </div>
                   ) : (

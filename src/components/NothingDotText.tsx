@@ -35,10 +35,10 @@ export const NothingDotText: React.FC<NothingDotTextProps> = ({
   };
 
   const sizeClasses = {
-    sm: "text-sm sm:text-base tracking-[0.15em]",
-    md: "text-xl sm:text-3xl tracking-[0.18em]",
-    lg: "text-4xl sm:text-6xl md:text-7xl tracking-[0.2em]",
-    xl: "text-6xl sm:text-8xl md:text-9xl tracking-[0.2em]",
+    sm: "text-[clamp(0.875rem,2.5vw,1rem)] tracking-[0.15em]",
+    md: "text-[clamp(1.25rem,4vw,1.875rem)] tracking-[0.18em]",
+    lg: "text-[clamp(2.5rem,7vw,4.5rem)] leading-none tracking-[0.2em]",
+    xl: "text-[clamp(3.5rem,9vw,8rem)] leading-none tracking-[0.2em]",
   };
 
   const displayText = bracketed ? `[ ${text.toUpperCase()} ]` : text.toUpperCase();

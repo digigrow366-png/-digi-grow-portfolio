@@ -21,6 +21,10 @@ export default function MountainParallaxHero() {
     mouseX.set(window.innerWidth / 2);
     mouseY.set(window.innerHeight / 2);
 
+    if (typeof window === 'undefined' || !window.matchMedia('(pointer: fine)').matches) {
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       // For fixed viewport elements, clientX/clientY are perfect if we offset by half the element size
       mouseX.set(e.clientX - 300);
@@ -90,10 +94,10 @@ export default function MountainParallaxHero() {
           />
         </div>
 
-        {/* ░░ LAYER 2: Parallax Text & UI Elements (z-10) ░░ */}
+        {/* ░░ LAYER 2: Parallax Text & UI Elements (z-30 for readability over avatar) ░░ */}
         <motion.div
           style={{ y: textY, opacity: textOpacity }}
-          className="absolute inset-0 z-10 w-full h-full flex items-center justify-between px-4 sm:px-8 md:px-16 pointer-events-none"
+          className="absolute inset-0 z-30 w-full h-full flex items-start pt-[12vh] md:items-center md:pt-0 justify-between px-4 sm:px-8 md:px-16 pointer-events-none"
         >
           {/* LEFT SIDE — HEADLINE TYPOGRAPHY */}
           <div className="relative flex flex-col items-start justify-center w-[55%] md:w-1/2">
@@ -154,7 +158,7 @@ export default function MountainParallaxHero() {
         {/* ░░ LAYER 3: Foreground Avatar Cutout (z-20) ░░ */}
         <motion.div
           style={{ scale: avatarScale, y: avatarY }}
-          className="absolute inset-x-0 bottom-0 z-20 w-full h-[75%] md:h-[85%] pointer-events-none flex items-end justify-center"
+          className="absolute inset-x-0 bottom-0 z-20 w-full h-[60%] md:h-[85%] pointer-events-none flex items-end justify-center"
         >
           <img
             src="/avatar.png"

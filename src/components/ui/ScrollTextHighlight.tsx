@@ -51,7 +51,7 @@ export function ScrollTextHighlight({
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 0.85", "end 0.25"],
+    offset: ["start 0.95", "end 0.1"],
   });
 
   const words = text.split(" ");

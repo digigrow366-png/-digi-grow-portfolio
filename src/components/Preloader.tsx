@@ -19,20 +19,25 @@ export function Preloader({ onLoadingComplete }: PreloaderProps) {
   }, [onLoadingComplete]);
 
   useEffect(() => {
-    // Lock scroll during loading
+    // Lock scroll during loading safely
+    const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    const interval = setInterval(() => {
+    let interval: NodeJS.Timeout;
+    let completionTimeout: NodeJS.Timeout;
+    let overflowTimeout: NodeJS.Timeout;
+
+    interval = setInterval(() => {
       setCount((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(() => {
+          completionTimeout = setTimeout(() => {
             setIsLoading(false);
             if (onCompleteRef.current) onCompleteRef.current();
             
             // Wait for the slide-up animation (0.85s) before restoring scroll
-            setTimeout(() => {
-              document.body.style.overflow = "auto";
+            overflowTimeout = setTimeout(() => {
+              document.body.style.overflow = originalOverflow;
             }, 900);
           }, 300);
           return 100;
@@ -46,7 +51,9 @@ export function Preloader({ onLoadingComplete }: PreloaderProps) {
 
     return () => {
       clearInterval(interval);
-      document.body.style.overflow = "auto";
+      clearTimeout(completionTimeout);
+      clearTimeout(overflowTimeout);
+      document.body.style.overflow = originalOverflow;
     };
   }, []);
 

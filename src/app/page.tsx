@@ -12,6 +12,7 @@ import { StickyStackSection } from "@/components/StickyStackSection";
 import { useProfile } from "@/hooks/useProfile";
 import { useTheme } from "@/hooks/useTheme";
 import { Preloader } from "@/components/Preloader";
+import { LazyRender } from "@/components/ui/LazyRender";
 import dynamic from 'next/dynamic';
 
 const GridScan = dynamic(() => import('@/components/GridScan').then(mod => mod.GridScan), { ssr: false });
@@ -98,31 +99,32 @@ export default function Home() {
         >
           <section
             id="about"
-            className="relative w-full h-full overflow-hidden flex flex-col justify-center py-10"
+            className="relative w-full h-full overflow-y-auto custom-scrollbar flex flex-col py-10"
           >
             {/* GridScan Three.js Background Layer */}
             <div
               className="absolute inset-0 z-0"
               style={{ pointerEvents: "auto" }}
             >
-              <GridScan
-                className=""
-                style={{}}
-                sensitivity={0.55}
-                lineThickness={1}
-                linesColor="#1c1917"
-                gridScale={0.1}
-                scanColor="#ef4444"
-                scanOpacity={0.4}
-                enablePost
-                bloomIntensity={0.6}
-                chromaticAberration={0.002}
-                noiseIntensity={0.01}
-                lineJitter={0.1}
-                scanGlow={0.5}
-                scanSoftness={2}
-                
-              />
+              <LazyRender>
+                <GridScan
+                  className=""
+                  style={{}}
+                  sensitivity={0.55}
+                  lineThickness={1}
+                  linesColor="#1c1917"
+                  gridScale={0.1}
+                  scanColor="#ef4444"
+                  scanOpacity={0.4}
+                  enablePost
+                  bloomIntensity={0.6}
+                  chromaticAberration={0.002}
+                  noiseIntensity={0.01}
+                  lineJitter={0.1}
+                  scanGlow={0.5}
+                  scanSoftness={2}
+                />
+              </LazyRender>
             </div>
 
             {/* Gradient fades */}
@@ -130,7 +132,7 @@ export default function Home() {
             <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[var(--color-background)] to-transparent z-[1] pointer-events-none" />
 
             {/* Content */}
-            <div className="relative z-10 max-w-4xl mx-auto px-6 md:px-8 space-y-6 pointer-events-none">
+            <div className="relative z-10 w-full max-w-4xl mx-auto px-6 md:px-8 space-y-6 pointer-events-none my-auto">
               <motion.span
                 className="block pointer-events-auto w-fit"
                 initial={{ opacity: 0, y: 12 }}
@@ -180,8 +182,12 @@ export default function Home() {
           total={TOTAL_SECTIONS}
           className="bg-[var(--color-background)]"
         >
-          <div id="work" className="h-full w-full flex flex-col justify-center overflow-y-auto custom-scrollbar">
-            <ProjectGrid />
+          <div id="work" className="h-full w-full flex flex-col overflow-y-auto custom-scrollbar">
+            <div className="w-full my-auto py-10">
+              <LazyRender>
+                <ProjectGrid />
+              </LazyRender>
+            </div>
           </div>
         </StickyStackSection>
 
@@ -193,8 +199,12 @@ export default function Home() {
           total={TOTAL_SECTIONS}
           className="bg-[var(--color-background)]"
         >
-          <div className="h-full w-full flex flex-col justify-center">
-            <SkillsCloudSection />
+          <div className="h-full w-full flex flex-col overflow-y-auto custom-scrollbar">
+            <div className="w-full my-auto">
+              <LazyRender>
+                <SkillsCloudSection />
+              </LazyRender>
+            </div>
           </div>
         </StickyStackSection>
 
@@ -206,9 +216,11 @@ export default function Home() {
           total={TOTAL_SECTIONS}
           className="bg-[var(--color-background)]"
         >
-          <div className="h-full w-full flex flex-col justify-between pt-10">
-            <div className="flex-1 flex items-center justify-center pb-10">
-              <ContactPinSection />
+          <div className="h-full w-full flex flex-col justify-between pt-10 overflow-y-auto custom-scrollbar">
+            <div className="flex-1 flex flex-col">
+              <div className="w-full my-auto pb-10">
+                <ContactPinSection />
+              </div>
             </div>
 
             {/* Footer */}

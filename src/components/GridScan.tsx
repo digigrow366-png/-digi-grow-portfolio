@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable prefer-const */
-// @ts-nocheck
 "use client";
 
 import { BloomEffect, ChromaticAberrationEffect, EffectComposer, EffectPass, RenderPass } from 'postprocessing';
@@ -508,7 +507,7 @@ export const GridScan = ({
       const dt = Math.max(0, Math.min(0.1, (now - last) / 1000));
       last = now;
       
-      if (!isInViewRef.current) {
+      if (!isInViewRef.current || (typeof document !== 'undefined' && document.visibilityState === 'hidden')) {
         rafRef.current = requestAnimationFrame(tick);
         return;
       }
