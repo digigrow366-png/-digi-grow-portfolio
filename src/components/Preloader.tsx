@@ -23,11 +23,10 @@ export function Preloader({ onLoadingComplete }: PreloaderProps) {
     const originalOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    let interval: NodeJS.Timeout;
     let completionTimeout: NodeJS.Timeout;
     let overflowTimeout: NodeJS.Timeout;
 
-    interval = setInterval(() => {
+    const interval = setInterval(() => {
       setCount((prev) => {
         if (prev >= 100) {
           clearInterval(interval);

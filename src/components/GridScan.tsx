@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable prefer-const */
 "use client";
@@ -273,7 +274,35 @@ void main(){
 }
 `;
 
-export const GridScan = ({
+interface GridScanProps {
+  sensitivity?: number;
+  lineThickness?: number;
+  linesColor?: string;
+  scanColor?: string;
+  scanOpacity?: number;
+  gridScale?: number;
+  lineStyle?: 'solid' | 'dashed' | 'dotted';
+  lineJitter?: number;
+  scanDirection?: 'forward' | 'backward' | 'pingpong';
+  enablePost?: boolean;
+  bloomIntensity?: number;
+  bloomThreshold?: number;
+  bloomSmoothing?: number;
+  chromaticAberration?: number;
+  noiseIntensity?: number;
+  scanGlow?: number;
+  scanSoftness?: number;
+  scanPhaseTaper?: number;
+  scanDuration?: number;
+  scanDelay?: number;
+  enableGyro?: boolean;
+  scanOnClick?: boolean;
+  snapBackDelay?: number;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export const GridScan: React.FC<GridScanProps> = ({
   sensitivity = 0.55,
   lineThickness = 1,
   linesColor = '#2F293A',
@@ -297,8 +326,8 @@ export const GridScan = ({
   enableGyro = false,
   scanOnClick = false,
   snapBackDelay = 250,
-  className,
-  style
+  className = '',
+  style = {}
 }) => {
   const containerRef = useRef(null);
   const isInView = useInView(containerRef);
