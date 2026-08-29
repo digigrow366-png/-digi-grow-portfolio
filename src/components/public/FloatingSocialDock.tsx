@@ -146,7 +146,7 @@ export default function FloatingSocialDock({ socialLinks }: SocialDockProps) {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5, delay: 1 }}
-      className="fixed left-4 top-1/2 -translate-y-1/2 z-[60] flex flex-col gap-3 p-2 rounded-full"
+      className="hidden md:flex fixed left-4 top-1/2 -translate-y-1/2 z-[60] flex-col gap-3 p-2 rounded-full"
       style={{
         backgroundColor: "rgba(8, 8, 8, 0.7)",
         backdropFilter: "blur(12px)",

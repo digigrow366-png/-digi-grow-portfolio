@@ -224,14 +224,6 @@ export default function Home() {
 
                 <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
                   <HeroSocialRow socialLinks={profile?.social_links} />
-                  <a
-                    href="/admin"
-                    data-cursor-hover
-                    className="text-sm font-medium hover:text-[var(--color-primary)] transition-colors"
-                    style={{ color: "var(--color-muted)" }}
-                  >
-                    Admin Login
-                  </a>
                 </div>
               </div>
             </footer>

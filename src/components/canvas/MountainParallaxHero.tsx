@@ -93,10 +93,10 @@ export default function MountainParallaxHero() {
         {/* ░░ LAYER 2: Parallax Text & UI Elements (z-10) ░░ */}
         <motion.div
           style={{ y: textY, opacity: textOpacity }}
-          className="absolute inset-0 z-10 w-full h-full flex items-center justify-between px-8 md:px-16 pointer-events-none"
+          className="absolute inset-0 z-10 w-full h-full flex items-center justify-between px-4 sm:px-8 md:px-16 pointer-events-none"
         >
           {/* LEFT SIDE — HEADLINE TYPOGRAPHY */}
-          <div className="relative flex flex-col items-start justify-center w-1/2">
+          <div className="relative flex flex-col items-start justify-center w-[55%] md:w-1/2">
             <div className="flex flex-col items-start justify-start gap-1">
               <NothingDotText
                 text={word1}
@@ -113,13 +113,13 @@ export default function MountainParallaxHero() {
                 />
               )}
             </div>
-            <p className="text-sm md:text-base mt-6 leading-relaxed font-light max-w-sm text-left" style={{ color: "var(--color-muted)" }}>
+            <p className="text-xs sm:text-sm md:text-base mt-4 sm:mt-6 leading-relaxed font-light max-w-sm text-left" style={{ color: "var(--color-muted)" }}>
               {tagline}
             </p>
           </div>
 
           {/* RIGHT SIDE — METADATA & PILLS */}
-          <div className="relative flex flex-col items-end justify-center w-1/2 gap-6 mt-12 md:mt-24">
+          <div className="relative flex flex-col items-end justify-center w-[45%] md:w-1/2 gap-3 sm:gap-6 mt-8 md:mt-24">
             <div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border backdrop-blur-md"
               style={{
