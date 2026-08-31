@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useRef } from "react";
+import { motion, useScroll } from "framer-motion";
 import CustomCursor from "@/components/brand/CustomCursor";
 import MountainParallaxHero from "@/components/canvas/MountainParallaxHero";
 import ProjectGrid from "@/components/projects/ProjectGrid";
@@ -38,6 +38,12 @@ export default function Home() {
   const [isReady, setIsReady] = useState(hasCompletedPreloaderSession);
   const [skipPreloader, setSkipPreloader] = useState(hasCompletedPreloaderSession);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
   React.useEffect(() => {
     // Just as a fallback in case state got out of sync
     if (hasCompletedPreloaderSession && !isReady) {
@@ -59,10 +65,11 @@ export default function Home() {
     <>
       {!skipPreloader && <Preloader onLoadingComplete={handleLoadingComplete} />}
       <motion.main 
+        ref={containerRef}
         initial={{ scale: 1.05, opacity: 0 }}
         animate={isReady ? { scale: 1, opacity: 1 } : { scale: 1.05, opacity: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative min-h-screen pb-24"
+        className="relative w-full min-h-screen bg-black px-3 sm:px-6 md:px-8 py-6 select-none"
       >
       <CustomCursor />
 
@@ -85,7 +92,7 @@ export default function Home() {
         {/* ═══════════════════════════════════════════════════
             CARD 1 — Hero (Mountain Parallax)
             ═══════════════════════════════════════════════════ */}
-        <StickyStackSection index={0} total={TOTAL_SECTIONS} className="bg-[var(--color-background)]">
+        <StickyStackSection index={0} total={TOTAL_SECTIONS} scrollYProgress={scrollYProgress} className="bg-[var(--color-background)]">
           <MountainParallaxHero />
         </StickyStackSection>
 
@@ -95,6 +102,7 @@ export default function Home() {
         <StickyStackSection
           index={1}
           total={TOTAL_SECTIONS}
+          scrollYProgress={scrollYProgress}
           className="bg-[var(--color-background)]"
         >
           <section
@@ -180,6 +188,7 @@ export default function Home() {
         <StickyStackSection
           index={2}
           total={TOTAL_SECTIONS}
+          scrollYProgress={scrollYProgress}
           className="bg-[var(--color-background)]"
         >
           <div id="work" className="h-full w-full flex flex-col overflow-y-auto custom-scrollbar">
@@ -197,6 +206,7 @@ export default function Home() {
         <StickyStackSection
           index={3}
           total={TOTAL_SECTIONS}
+          scrollYProgress={scrollYProgress}
           className="bg-[var(--color-background)]"
         >
           <div className="h-full w-full flex flex-col overflow-y-auto custom-scrollbar">
@@ -214,6 +224,7 @@ export default function Home() {
         <StickyStackSection
           index={4}
           total={TOTAL_SECTIONS}
+          scrollYProgress={scrollYProgress}
           className="bg-[var(--color-background)]"
         >
           <div className="h-full w-full flex flex-col justify-between pt-10 overflow-y-auto custom-scrollbar">
