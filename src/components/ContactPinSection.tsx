@@ -81,32 +81,64 @@ const contactLinks: ContactItem[] = [
 export function ContactPinSection() {
   const { profile } = useProfile();
   
-  const getHref = (id: number) => {
-    const links = profile?.social_links;
-    if (!links) return "#";
-    if (id === 1) return links.instagram || "https://instagram.com";
-    if (id === 2) return links.linkedin || "https://linkedin.com";
-    if (id === 3) return links.github || links.twitter || "https://github.com";
-    if (id === 4) return "mailto:hello@digigrow.com"; // Fallback email
-    return "#";
+  // We will build `dynamicLinks` array based on populated profile.social_links
+  // plus fallback email if none exists, and custom links if present.
+  const dynamicLinks: ContactItem[] = [];
+
+  const addLink = (
+    platformId: string,
+    title: string,
+    url: string,
+    desc: string,
+    gradient: string,
+    icon: React.ReactNode
+  ) => {
+    if (!url || url.trim() === "") return;
+    const cleanUrl = url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
+    let handle = cleanUrl;
+    if (url.startsWith("mailto:")) {
+      handle = url.replace("mailto:", "");
+    } else {
+      const parts = cleanUrl.split("/");
+      if (parts.length > 1) {
+        handle = "@" + parts.pop();
+      }
+    }
+
+    dynamicLinks.push({
+      id: dynamicLinks.length + 1,
+      title,
+      href: url.startsWith("http") || url.startsWith("mailto") ? url : `https://${url}`,
+      pinText: cleanUrl,
+      handle,
+      desc,
+      gradient,
+      icon,
+    });
   };
 
-  const getHandle = (id: number) => {
-    const links = profile?.social_links;
-    if (!links) return "";
-    if (id === 1 && links.instagram) return links.instagram.split('/').pop();
-    if (id === 2 && links.linkedin) return links.linkedin.split('/').pop();
-    if (id === 3 && (links.github || links.twitter)) return (links.github || links.twitter).split('/').pop();
-    if (id === 4) return "hello@digigrow.com";
-    return "";
-  };
+  const links = profile?.social_links;
+  if (links) {
+    if (links.instagram) addLink("instagram", "Instagram", links.instagram, "Behind the scenes, creative motion design & visual experiments.", "from-pink-500 via-red-500 to-yellow-500", contactLinks[0].icon);
+    if (links.linkedin) addLink("linkedin", "LinkedIn", links.linkedin, "Professional career updates, leadership & engineering connections.", "from-blue-600 via-cyan-500 to-teal-400", contactLinks[1].icon);
+    if (links.twitter) addLink("twitter", "Twitter / X", links.twitter, "Quick updates, tech thoughts, and daily musings.", "from-zinc-700 via-zinc-800 to-zinc-950", contactLinks[2].icon);
+    if (links.github) addLink("github", "GitHub", links.github, "Open source repositories, WebGL shaders & code experiments.", "from-zinc-700 via-zinc-800 to-zinc-950", contactLinks[2].icon);
+    if (links.youtube) addLink("youtube", "YouTube", links.youtube, "Video tutorials, creative showcases and long-form content.", "from-red-600 via-red-700 to-red-900", <svg className="w-5 h-5 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>);
+    if (links.facebook) addLink("facebook", "Facebook", links.facebook, "Community updates, events, and brand announcements.", "from-blue-700 via-blue-800 to-blue-900", <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>);
+    if (links.discord) addLink("discord", "Discord", links.discord, "Join the community server to chat and collaborate.", "from-indigo-500 via-indigo-600 to-purple-600", <svg className="w-5 h-5 text-indigo-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/><path d="M15 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/><path d="M21 8.5c0-1.8-1.5-3.5-4-4-1-1.5-2.5-2.5-5-2.5S8 3 7 4.5c-2.5.5-4 2.2-4 4 0 5 1.5 8 4.5 9 1.5.5 3.5 1.5 4.5 2.5 1-1 3-2 4.5-2.5 3-1 4.5-4 4.5-9z"/></svg>);
+    
+    // Custom links
+    const customLinks = links.custom_links || [];
+    customLinks.forEach((c: any) => {
+      if (c.url && c.active !== false) {
+        addLink("custom", c.label || "Link", c.url, "Visit my custom featured link.", "from-zinc-500 via-zinc-600 to-zinc-700", contactLinks[2].icon); // Default icon for custom
+      }
+    });
+  }
 
-  const getPinText = (id: number) => {
-    const href = getHref(id);
-    if (href === "#") return contactLinks.find(c => c.id === id)?.pinText || "";
-    if (href.startsWith("mailto:")) return href.replace("mailto:", "");
-    return href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, "");
-  };
+  // Always ensure at least email is present if nothing else, or add email to the end if present
+  const email = profile?.contact_email || "hello@digigrow.com";
+  addLink("email", "Direct Email", `mailto:${email}`, "Inquiries regarding collaborative projects & web engineering.", "from-emerald-500 via-teal-600 to-cyan-700", contactLinks[3].icon);
 
   return (
     <section id="contact" className="relative w-full py-16 md:py-32 bg-black overflow-hidden select-none">
@@ -139,7 +171,7 @@ export function ContactPinSection() {
 
       {/* 4 Pin Cards Staggered Grid */}
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 md:gap-y-28 gap-x-6 place-items-center relative z-10">
-        {contactLinks.map((item, index) => (
+        {dynamicLinks.map((item, index) => (
           <motion.div
             key={item.id}
             initial={{ opacity: 0, y: 40 }}
@@ -147,12 +179,12 @@ export function ContactPinSection() {
             viewport={{ once: true, amount: 0.2 }}
             transition={{
               duration: 0.6,
-              delay: index * 0.15, // Line-by-line staggered entry
+              delay: index * 0.15,
               ease: [0.22, 1, 0.36, 1],
             }}
             className="h-[23rem] w-full flex items-center justify-center"
           >
-            <PinContainer title={getPinText(item.id)} href={getHref(item.id) !== '#' ? getHref(item.id) : item.href}>
+            <PinContainer title={item.pinText} href={item.href}>
               <div className="flex basis-full flex-col p-5 tracking-tight text-slate-100/50 w-[17rem] h-[19rem] bg-zinc-950/80 border border-zinc-800/90 rounded-2xl backdrop-blur-md justify-between group/card transition-all duration-300 hover:shadow-xl hover:border-zinc-700 active:scale-95 cursor-pointer">
                 <div>
                   <div className="flex items-center justify-between">
@@ -170,10 +202,10 @@ export function ContactPinSection() {
                   <h3 className="font-bold text-lg text-white mt-4">
                     {item.title}
                   </h3>
-                  <p className="text-xs font-mono text-zinc-400 mt-1 transition-colors group-hover/card:text-zinc-300">
-                    {getHandle(item.id) || item.handle}
+                  <p className="text-xs font-mono text-zinc-400 mt-1 transition-colors group-hover/card:text-zinc-300 truncate max-w-full">
+                    {item.handle}
                   </p>
-                  <p className="text-xs text-zinc-500 mt-3 leading-relaxed transition-colors group-hover/card:text-zinc-400">
+                  <p className="text-xs text-zinc-500 mt-3 leading-relaxed transition-colors group-hover/card:text-zinc-400 line-clamp-3">
                     {item.desc}
                   </p>
                 </div>
