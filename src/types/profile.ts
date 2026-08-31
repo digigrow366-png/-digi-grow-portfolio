@@ -8,6 +8,7 @@ export interface CustomSocialLink {
 
 /** Social links structure matching the DB jsonb column */
 export interface SocialLinks {
+  email?: string;
   instagram: string;
   facebook: string;
   linkedin: string;
@@ -58,6 +59,7 @@ export const DEFAULT_THEME: Theme = {
 
 /** Default social links — empty but structured */
 export const DEFAULT_SOCIAL_LINKS: SocialLinks = {
+  email: "",
   instagram: "",
   facebook: "",
   linkedin: "",

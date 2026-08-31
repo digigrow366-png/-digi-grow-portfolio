@@ -4,6 +4,7 @@ import React from "react";
 import type { SocialLinks, CustomSocialLink } from "@/types/profile";
 
 const PLATFORMS: { key: keyof Omit<SocialLinks, "custom_links">; label: string }[] = [
+  { key: "email", label: "Email Address" },
   { key: "instagram", label: "Instagram" },
   { key: "facebook", label: "Facebook" },
   { key: "linkedin", label: "LinkedIn" },

@@ -137,8 +137,8 @@ export function ContactPinSection() {
   }
 
   // Always ensure at least email is present if nothing else, or add email to the end if present
-  const email = profile?.contact_email || "hello@digigrow.com";
-  addLink("email", "Direct Email", `mailto:${email}`, "Inquiries regarding collaborative projects & web engineering.", "from-emerald-500 via-teal-600 to-cyan-700", contactLinks[3].icon);
+  const email = profile?.social_links?.email || "hello@digigrow.com";
+  addLink("email", "Direct Email", email.includes("@") && !email.startsWith("mailto:") ? `mailto:${email}` : email, "Inquiries regarding collaborative projects & web engineering.", "from-emerald-500 via-teal-600 to-cyan-700", contactLinks[3].icon);
 
   return (
     <section id="contact" className="relative w-full py-16 md:py-32 bg-black overflow-hidden select-none">
