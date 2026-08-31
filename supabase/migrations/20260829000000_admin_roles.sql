@@ -19,7 +19,7 @@ alter table public.admin_users enable row level security;
 create policy "Admins can read admin list"
   on public.admin_users for select
   to authenticated
-  using ( auth.uid() in (select user_id from public.admin_users) );
+  using ( auth.uid() = user_id );
 
 -- 2. Update Profile Policies
 drop policy if exists "Profile: authenticated write" on public.profile;
