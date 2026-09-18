@@ -60,9 +60,19 @@ export default function WorkDetailPage({
 
         if (error) {
           console.error("Work detail fetch error:", error);
-          setNotFound(true);
+          const found = FALLBACK_PROJECTS.find((p) => p.slug === params.slug);
+          if (found) {
+            setProject(found);
+          } else {
+            setNotFound(true);
+          }
         } else if (!data) {
-          setNotFound(true);
+          const found = FALLBACK_PROJECTS.find((p) => p.slug === params.slug);
+          if (found) {
+            setProject(found);
+          } else {
+            setNotFound(true);
+          }
         } else {
           setProject({
             ...data,
@@ -73,7 +83,12 @@ export default function WorkDetailPage({
       } catch (err) {
         if (!isMounted.current) return;
         console.error("Work detail error:", err);
-        setNotFound(true);
+        const found = FALLBACK_PROJECTS.find((p) => p.slug === params.slug);
+        if (found) {
+          setProject(found);
+        } else {
+          setNotFound(true);
+        }
       } finally {
         if (isMounted.current) setLoading(false);
       }
