@@ -36,12 +36,11 @@ export function StickyStackSection({
   const targetScale = 1 - (total - index) * 0.025;
   const scale = useTransform(scrollYProgress, [startRange, endRange], [1, targetScale]);
 
-  // Opacity: 1 → 0.5 (cards behind feel more "behind")
-  const opacity = useTransform(scrollYProgress, [startRange, endRange], [1, 0.5]);
+  // Opacity: 1 -> 1 (Cards remain fully visible, no fading to black)
+  const opacity = useTransform(scrollYProgress, [startRange, endRange], [1, 1]);
 
-  // Brightness: 1 -> 1 (User requested to remove the dimming effect)
-  const brightness = useTransform(scrollYProgress, [startRange, endRange], [1, 1]);
-  const filterVal = useTransform(brightness, (v) => `brightness(${v})`);
+  // Brightness: no dimming effect
+  const filterVal = "none";
 
   return (
     <div
