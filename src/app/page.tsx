@@ -69,7 +69,7 @@ export default function Home() {
         initial={{ scale: 1.05, opacity: 0 }}
         animate={isReady ? { scale: 1, opacity: 1 } : { scale: 1.05, opacity: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative w-full min-h-screen bg-black px-3 sm:px-6 md:px-8 py-6 select-none"
+        className="relative w-full min-h-screen bg-black select-none"
       >
       <CustomCursor />
 
@@ -87,7 +87,7 @@ export default function Home() {
       </div>
 
       {/* ░░ CARD STACK CONTAINER ░░ */}
-      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-4 md:px-8 pt-6 md:pt-10 flex flex-col">
+      <div className="relative z-10 w-full max-w-[1800px] mx-auto px-4 md:px-8 flex flex-col">
         
         {/* ═══════════════════════════════════════════════════
             CARD 1 — Hero (Mountain Parallax)

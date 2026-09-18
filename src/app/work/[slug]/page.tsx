@@ -43,11 +43,18 @@ export default function WorkDetailPage({
       }
 
       try {
-        const { data, error } = await supabase
-          .from("projects")
-          .select("*")
-          .eq("slug", params.slug)
-          .maybeSingle();
+        const timeoutPromise = new Promise<{ data: any; error: any }>((_, reject) =>
+          setTimeout(() => reject(new Error("Supabase fetch timeout")), 3000)
+        );
+
+        const { data, error } = await Promise.race([
+          supabase
+            .from("projects")
+            .select("*")
+            .eq("slug", params.slug)
+            .maybeSingle(),
+          timeoutPromise,
+        ]);
 
         if (!isMounted.current) return;
 

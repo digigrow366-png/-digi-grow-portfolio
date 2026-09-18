@@ -37,10 +37,17 @@ export function useProjects(): UseProjectsReturn {
     setError(null);
 
     try {
-      const { data, error: dbError } = await supabase
-        .from("projects")
-        .select("*")
-        .order("sort_order", { ascending: true });
+      const timeoutPromise = new Promise<{ data: any; error: any }>((_, reject) =>
+        setTimeout(() => reject(new Error("Supabase fetch timeout")), 3000)
+      );
+
+      const { data, error: dbError } = await Promise.race([
+        supabase
+          .from("projects")
+          .select("*")
+          .order("sort_order", { ascending: true }),
+        timeoutPromise,
+      ]);
 
       if (!isMounted.current) return;
 
@@ -101,10 +108,17 @@ export function useAdminProjects(): UseProjectsReturn {
     setError(null);
 
     try {
-      const { data, error: dbError } = await supabase
-        .from("projects")
-        .select("*")
-        .order("sort_order", { ascending: true });
+      const timeoutPromise = new Promise<{ data: any; error: any }>((_, reject) =>
+        setTimeout(() => reject(new Error("Supabase fetch timeout")), 3000)
+      );
+
+      const { data, error: dbError } = await Promise.race([
+        supabase
+          .from("projects")
+          .select("*")
+          .order("sort_order", { ascending: true }),
+        timeoutPromise,
+      ]);
 
       if (!isMounted.current) return;
 
