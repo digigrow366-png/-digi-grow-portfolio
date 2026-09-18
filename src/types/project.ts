@@ -26,55 +26,48 @@ export interface Project {
 /** Fallback seed projects — used when Supabase is unreachable */
 export const FALLBACK_PROJECTS: Project[] = [
   {
-    id: "seed-bhoomi-mitra",
-    title: "Bhoomi Mitra — AI Land Portal",
-    slug: "bhoomi-mitra",
-    category: "Website Design",
+    id: "seed-1",
+    title: "Website Design",
+    slug: "website-design",
+    category: "Development",
     summary:
-      "AI-powered citizen land and civic registry portal featuring GIS spatial boundary inspection, Bhu-Aadhar (ULPIN) verification, SRO registration delay prediction, and an interactive Hinglish AI voice assistant.",
+      "A collection of modern, responsive web applications and AI portals built for scale.",
     cover_image_url: "/projects/bhoomi-mitra.jpg",
     gallery: ["/projects/bhoomi-mitra.jpg"],
     sub_cards: [
       {
-        title: "GIS Boundary Defense",
+        title: "Bhoomi Mitra — AI Land Portal",
         description:
-          "Interactive Leaflet GIS map with polygon boundary defense and spatial land risk score analytics.",
+          "AI-powered citizen land and civic registry portal featuring GIS spatial boundary inspection and Bhu-Aadhar verification.",
         image: "/projects/bhoomi-mitra.jpg",
         url: "https://bhoomi-mitra-kohl.vercel.app/",
       },
       {
-        title: "Bhu-Aadhar Verification",
+        title: "Pratyaksh AI",
         description:
-          "Direct verification against national land registry standards with citizen PII masking and mutation tracking.",
+          "Advanced AI platform for predictive analytics, providing deep insights and automation.",
         image: "/projects/bhoomi-mitra.jpg",
-        url: "https://bhoomi-mitra-kohl.vercel.app/",
+        url: "https://pratyaksh-ai-git-main-digigrow366-pngs-projects.vercel.app",
       },
       {
-        title: "Hinglish AI Voice Agent",
+        title: "Digi Grow Interactive Portfolio",
         description:
-          "Conversational voice-first intelligence helping citizens understand land records and legal RTI filing.",
+          "My personal portfolio built with Next.js, Framer Motion, and Tailwind CSS featuring dynamic stacking cards.",
         image: "/projects/bhoomi-mitra.jpg",
-        url: "https://bhoomi-mitra-kohl.vercel.app/",
-      },
-      {
-        title: "SRO Delay Prediction",
-        description:
-          "Predictive analytics engine for sub-registrar office turnaround times and automated dispute escalation.",
-        image: "/projects/bhoomi-mitra.jpg",
-        url: "https://bhoomi-mitra-kohl.vercel.app/",
+        url: "https://digi-grow-portfolio-git-main-digigrow366-pngs-projects.vercel.app",
       },
     ],
-    external_url: "https://bhoomi-mitra-kohl.vercel.app/",
+    external_url: null,
     published: true,
     sort_order: 0,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
   {
-    id: "seed-1",
+    id: "seed-2",
     title: "B-Roll & Video Editing",
     slug: "b-roll-video-editing",
-    category: "B-Roll & Video Editing",
+    category: "Video Production",
     summary:
       "Professional B-Roll footage and video editing services that bring your brand story to life.",
     cover_image_url: null,
@@ -87,26 +80,10 @@ export const FALLBACK_PROJECTS: Project[] = [
     updated_at: new Date().toISOString(),
   },
   {
-    id: "seed-2",
-    title: "Website Design",
-    slug: "website-design",
-    category: "Website Design",
-    summary:
-      "Modern, responsive website design built for performance and visual impact.",
-    cover_image_url: null,
-    gallery: [],
-    sub_cards: [],
-    external_url: null,
-    published: true,
-    sort_order: 2,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  },
-  {
     id: "seed-3",
     title: "Brand Identity",
     slug: "brand-identity",
-    category: "Brand Identity",
+    category: "Design",
     summary:
       "Comprehensive brand identity packages including logo, color palette, and style guides.",
     cover_image_url: null,
@@ -114,7 +91,7 @@ export const FALLBACK_PROJECTS: Project[] = [
     sub_cards: [],
     external_url: null,
     published: true,
-    sort_order: 3,
+    sort_order: 2,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },

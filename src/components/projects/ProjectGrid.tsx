@@ -80,83 +80,69 @@ export default function ProjectGrid() {
           </h2>
         </motion.div>
 
-        <div className="space-y-16">
-          {Object.entries(
-            projects.reduce((acc, project) => {
-              const cat = project.category || "Other";
-              if (!acc[cat]) acc[cat] = [];
-              acc[cat].push(project);
-              return acc;
-            }, {} as Record<string, typeof projects>)
-          ).map(([category, categoryProjects]) => (
-            <div key={category} className="category-section">
-              <h3 className="text-2xl font-bold mb-6 text-white/90 border-b border-white/10 pb-3">{category}</h3>
-              <div className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-8 md:pb-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                {categoryProjects.map((p, idx) => (
-                  <Link key={p.id} href={`/work/${p.slug}`} className="shrink-0 snap-center w-[80vw] sm:w-[50vw] md:w-auto h-auto block">
-                    <motion.div
-                      data-cursor-hover
-                      initial={{ opacity: 0, y: 30 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-50px" }}
-                      transition={{ duration: 0.5, delay: Math.min(idx, 5) * 0.1 }}
-                      className="h-auto block"
-                    >
-                      <CometCard className="h-full group">
-                      <div 
-                        className="bento-card rounded-xl overflow-hidden relative transition-all duration-500 hover:border-white/20 flex flex-col h-full"
-                        style={{ backgroundColor: "color-mix(in srgb, var(--color-primary) 2%, #09090b)" }}
-                      >
-                        {/* Hover glow effect */}
-                        <div 
-                          className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
-                          style={{ background: "radial-gradient(circle at center, var(--color-primary) 0%, transparent 70%)" }}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((p, idx) => (
+            <Link key={p.id} href={`/work/${p.slug}`} className="block h-auto">
+              <motion.div
+                data-cursor-hover
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: Math.min(idx, 5) * 0.1 }}
+                className="h-full"
+              >
+                <CometCard className="h-full group">
+                  <div 
+                    className="bento-card rounded-xl overflow-hidden relative transition-all duration-500 hover:border-white/20 flex flex-col h-full"
+                    style={{ backgroundColor: "color-mix(in srgb, var(--color-primary) 2%, #09090b)" }}
+                  >
+                    {/* Hover glow effect */}
+                    <div 
+                      className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-700 pointer-events-none"
+                      style={{ background: "radial-gradient(circle at center, var(--color-primary) 0%, transparent 70%)" }}
+                    />
+                    {p.cover_image_url ? (
+                      <div className="w-full h-64 overflow-hidden relative border-b border-white/5">
+                        <img
+                          src={p.cover_image_url}
+                          alt={p.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                          decoding="async"
                         />
-                        {p.cover_image_url ? (
-                          <div className="w-full h-64 overflow-hidden relative border-b border-white/5">
-                            <img
-                              src={p.cover_image_url}
-                              alt={p.title}
-                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-full h-64 bg-zinc-950 flex items-center justify-center border-b border-white/5">
-                            <span
-                              className={`text-6xl font-black opacity-5 ${ndotFont.className}`}
-                            >
-                              {String(idx + 1).padStart(2, "0")}
-                            </span>
-                          </div>
-                        )}
-                        <div className="p-6 relative z-10">
-                          <span 
-                            className={`inline-block px-2 py-1 rounded bg-white/5 border border-white/10 text-[8px] md:text-[9px] uppercase tracking-widest ${ndotFont.className}`}
-                            style={{ color: "var(--color-primary)" }}
-                          >
-                            {p.category || "Project"}
-                          </span>
-                          <h3 className="text-xl font-black tracking-tight mt-3">
-                            {p.title}
-                          </h3>
-                          {p.summary && (
-                            <p
-                              className="text-sm mt-2 line-clamp-2"
-                              style={{ color: "var(--color-muted)" }}
-                            >
-                              {p.summary}
-                            </p>
-                          )}
-                        </div>
                       </div>
-                    </CometCard>
-                    </motion.div>
-                  </Link>
-                ))}
-              </div>
-            </div>
+                    ) : (
+                      <div className="w-full h-64 bg-zinc-950 flex items-center justify-center border-b border-white/5">
+                        <span
+                          className={`text-6xl font-black opacity-5 ${ndotFont.className}`}
+                        >
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+                    )}
+                    <div className="p-6 relative z-10 flex-grow flex flex-col justify-end">
+                      <span 
+                        className={`inline-block px-2 py-1 rounded bg-white/5 border border-white/10 text-[8px] md:text-[9px] uppercase tracking-widest ${ndotFont.className} self-start`}
+                        style={{ color: "var(--color-primary)" }}
+                      >
+                        {p.category || "Project"}
+                      </span>
+                      <h3 className="text-xl font-black tracking-tight mt-3">
+                        {p.title}
+                      </h3>
+                      {p.summary && (
+                        <p
+                          className="text-sm mt-2 line-clamp-2"
+                          style={{ color: "var(--color-muted)" }}
+                        >
+                          {p.summary}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </CometCard>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </div>
