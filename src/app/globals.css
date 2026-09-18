@@ -188,3 +188,39 @@
     background-clip: text;
   }
 }
+
+/* ─── CUSTOM SCROLLBAR (inner sections) ─── */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── SMOOTH SCROLL FOR ANCHOR LINKS ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── MOBILE TOUCH UTILITIES ─── */
+@media (max-width: 768px) {
+  /* Prevent horizontal overflow on mobile */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Smoother momentum scrolling on iOS */
+  .custom-scrollbar {
+    -webkit-overflow-scrolling: touch;
+  }
+}

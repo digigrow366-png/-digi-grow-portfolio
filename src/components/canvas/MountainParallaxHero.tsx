@@ -97,11 +97,11 @@ export default function MountainParallaxHero() {
         {/* ░░ LAYER 2: Parallax Text & UI Elements (z-30 for readability over avatar) ░░ */}
         <motion.div
           style={{ y: textY, opacity: textOpacity }}
-          className="absolute inset-0 z-30 w-full h-full flex items-start pt-[12vh] md:items-center md:pt-0 justify-between px-4 sm:px-8 md:px-16 pointer-events-none"
+          className="absolute inset-0 z-30 w-full h-full flex flex-col items-center pt-[15vh] md:flex-row md:items-center md:pt-0 justify-center md:justify-between px-4 sm:px-8 md:px-16 pointer-events-none gap-6 md:gap-0"
         >
           {/* LEFT SIDE — HEADLINE TYPOGRAPHY */}
-          <div className="relative flex flex-col items-start justify-center w-[55%] md:w-1/2">
-            <div className="flex flex-col items-start justify-start gap-1">
+          <div className="relative flex flex-col items-center md:items-start justify-center w-full md:w-1/2">
+            <div className="flex flex-col items-center md:items-start justify-start gap-1">
               <NothingDotText
                 text={word1}
                 variant="white"
@@ -117,13 +117,13 @@ export default function MountainParallaxHero() {
                 />
               )}
             </div>
-            <p className="text-xs sm:text-sm md:text-base mt-4 sm:mt-6 leading-relaxed font-light max-w-sm text-left" style={{ color: "var(--color-muted)" }}>
+            <p className="text-xs sm:text-sm md:text-base mt-4 sm:mt-6 leading-relaxed font-light max-w-sm text-center md:text-left" style={{ color: "var(--color-muted)" }}>
               {tagline}
             </p>
           </div>
 
-          {/* RIGHT SIDE — METADATA & PILLS */}
-          <div className="relative flex flex-col items-end justify-center w-[45%] md:w-1/2 gap-3 sm:gap-6 mt-8 md:mt-24">
+          {/* RIGHT SIDE — METADATA & PILLS (hidden on mobile, shown as overlay on md+) */}
+          <div className="relative hidden md:flex flex-col items-end justify-center w-1/2 gap-3 sm:gap-6 mt-8 md:mt-24">
             <div
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border backdrop-blur-md"
               style={{
@@ -178,7 +178,7 @@ export default function MountainParallaxHero() {
         </div>
 
         {/* ░░ LAYER 4: Fixed Navigation (z-40) ░░ */}
-        <nav className="fixed top-6 right-6 md:top-10 md:right-10 z-[60] flex items-center gap-3 md:gap-6 flex-wrap justify-end max-w-[150px] md:max-w-none pointer-events-auto">
+        <nav className="fixed top-4 right-4 md:top-10 md:right-10 z-[60] flex items-center gap-2 md:gap-6 pointer-events-auto">
           {[
             { label: "About", href: "#about" },
             { label: "Work", href: "#work" },
@@ -189,7 +189,7 @@ export default function MountainParallaxHero() {
               key={label} 
               href={href} 
               data-cursor-hover 
-              className="text-[10px] md:text-xs font-mono uppercase tracking-widest text-white/70 hover:text-white transition-colors"
+              className="text-[9px] md:text-xs font-mono uppercase tracking-widest text-white/70 hover:text-white transition-colors px-1.5 py-1 md:px-0 md:py-0"
             >
               {label}
             </a>

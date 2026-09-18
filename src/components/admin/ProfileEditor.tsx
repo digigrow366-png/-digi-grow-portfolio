@@ -18,6 +18,7 @@ export default function ProfileEditor() {
   const [formData, setFormData] = useState<UserProfile>(FALLBACK_PROFILE);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [isOffline, setIsOffline] = useState(false);
   const [toast, setToast] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const isMounted = useRef(true);
 
@@ -25,42 +26,62 @@ export default function ProfileEditor() {
     isMounted.current = true;
 
     async function fetchProfile() {
+      // Try localStorage first as a fast cache
+      const cached = localStorage.getItem("dg_profile_cache");
+
       if (!isSupabaseConfigured()) {
-        setFormData(JSON.parse(JSON.stringify(FALLBACK_PROFILE)));
+        const base = cached ? JSON.parse(cached) : FALLBACK_PROFILE;
+        setFormData(JSON.parse(JSON.stringify(base)));
+        setIsOffline(true);
         setLoading(false);
         return;
       }
 
-      const { data, error } = await supabase
-        .from("profile")
-        .select("*")
-        .limit(1)
-        .maybeSingle();
+      try {
+        const timeoutPromise = new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("Supabase fetch timeout")), 3000)
+        );
 
-      if (!isMounted.current) return;
+        const { data, error } = await Promise.race([
+          supabase.from("profile").select("*").limit(1).maybeSingle(),
+          timeoutPromise,
+        ]) as { data: any; error: any };
 
-      if (error || !data) {
-        setFormData(JSON.parse(JSON.stringify(FALLBACK_PROFILE)));
-      } else {
-        const normalized: UserProfile = {
-          ...data,
-          social_links: {
-            ...DEFAULT_SOCIAL_LINKS,
-            ...(data.social_links as Record<string, unknown> ?? {}),
-            custom_links: Array.isArray((data.social_links as Record<string, unknown>)?.custom_links)
-              ? (data.social_links as Record<string, unknown>).custom_links as UserProfile["social_links"]["custom_links"]
-              : [],
-          },
-          theme: {
-            ...DEFAULT_THEME,
-            ...(data.theme as Record<string, unknown> ?? {}),
-          },
-        } as UserProfile;
-        /* Deep copy to isolate form state */
-        setFormData(JSON.parse(JSON.stringify(normalized)));
+        if (!isMounted.current) return;
+
+        if (error || !data) {
+          // DB failed — use cached or fallback
+          const base = cached ? JSON.parse(cached) : FALLBACK_PROFILE;
+          setFormData(JSON.parse(JSON.stringify(base)));
+          if (error) setIsOffline(true);
+        } else {
+          const normalized: UserProfile = {
+            ...data,
+            social_links: {
+              ...DEFAULT_SOCIAL_LINKS,
+              ...(data.social_links as Record<string, unknown> ?? {}),
+              custom_links: Array.isArray((data.social_links as Record<string, unknown>)?.custom_links)
+                ? (data.social_links as Record<string, unknown>).custom_links as UserProfile["social_links"]["custom_links"]
+                : [],
+            },
+            theme: {
+              ...DEFAULT_THEME,
+              ...(data.theme as Record<string, unknown> ?? {}),
+            },
+          } as UserProfile;
+          setFormData(JSON.parse(JSON.stringify(normalized)));
+          // Cache for offline use
+          localStorage.setItem("dg_profile_cache", JSON.stringify(normalized));
+        }
+      } catch {
+        // Timeout — use cached or fallback
+        if (!isMounted.current) return;
+        const base = cached ? JSON.parse(cached) : FALLBACK_PROFILE;
+        setFormData(JSON.parse(JSON.stringify(base)));
+        setIsOffline(true);
       }
 
-      setLoading(false);
+      if (isMounted.current) setLoading(false);
     }
 
     fetchProfile();
@@ -118,17 +139,23 @@ export default function ProfileEditor() {
       theme: formData.theme,
     };
 
-    if (!isSupabaseConfigured()) {
-      setToast({ type: "error", message: "Supabase not configured. Changes are preview-only." });
+    if (!isSupabaseConfigured() || isOffline) {
+      // Save to localStorage as offline fallback
+      localStorage.setItem("dg_profile_cache", JSON.stringify({ ...formData, social_links: prefixedSocials }));
+      setToast({ type: "success", message: "Saved locally (Supabase offline)" });
       setSaving(false);
+      setTimeout(() => setToast(null), 4000);
       return;
     }
 
     const { error } = await supabase.from("profile").upsert(payload);
 
     if (error) {
-      setToast({ type: "error", message: error.message });
+      // DB save failed — save to localStorage
+      localStorage.setItem("dg_profile_cache", JSON.stringify({ ...formData, social_links: prefixedSocials }));
+      setToast({ type: "error", message: `DB error: ${error.message}. Saved locally instead.` });
     } else {
+      localStorage.setItem("dg_profile_cache", JSON.stringify({ ...formData, social_links: prefixedSocials }));
       setToast({ type: "success", message: "Profile saved successfully!" });
     }
 

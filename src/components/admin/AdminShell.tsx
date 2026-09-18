@@ -22,6 +22,7 @@ export default function AdminShell({
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
   const [loggingIn, setLoggingIn] = useState(false);
+  const [isOffline, setIsOffline] = useState(false);
   const isMounted = useRef(true);
 
   useEffect(() => {
@@ -31,17 +32,34 @@ export default function AdminShell({
       if (!isSupabaseConfigured()) {
         /* No Supabase configured — allow access for dev/demo mode */
         setAuthenticated(true);
+        setIsOffline(true);
         setLoading(false);
         return;
       }
 
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+      try {
+        const timeoutPromise = new Promise<never>((_, reject) =>
+          setTimeout(() => reject(new Error("Auth timeout")), 3000)
+        );
 
-      if (isMounted.current) {
-        setAuthenticated(!!session);
-        setLoading(false);
+        const {
+          data: { session },
+        } = await Promise.race([
+          supabase.auth.getSession(),
+          timeoutPromise,
+        ]) as { data: { session: any } };
+
+        if (isMounted.current) {
+          setAuthenticated(!!session);
+          setLoading(false);
+        }
+      } catch {
+        /* Supabase paused or unreachable — allow demo access */
+        if (isMounted.current) {
+          setAuthenticated(true);
+          setIsOffline(true);
+          setLoading(false);
+        }
       }
     }
 
@@ -151,6 +169,11 @@ export default function AdminShell({
             <Wordmark />
           </a>
           <span className="badge-label">Admin</span>
+          {isOffline && (
+            <span className="px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30 animate-pulse">
+              ⚡ Offline — Demo Mode
+            </span>
+          )}
         </div>
         <nav className="flex items-center gap-4">
           <a

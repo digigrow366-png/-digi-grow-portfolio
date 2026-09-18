@@ -170,7 +170,7 @@ export function ContactPinSection() {
       </motion.div>
 
       {/* 4 Pin Cards Staggered Grid */}
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 md:gap-y-28 gap-x-6 place-items-center relative z-10">
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 md:gap-y-28 gap-x-6 place-items-center relative z-10">
         {dynamicLinks.map((item, index) => (
           <motion.div
             key={item.id}

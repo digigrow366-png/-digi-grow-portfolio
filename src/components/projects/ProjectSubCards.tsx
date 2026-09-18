@@ -16,18 +16,18 @@ export function ProjectSubCards({ cards }: { cards: SubCard[] }) {
   const middleIndex = Math.floor(totalCards / 2);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[600px] w-full p-8 overflow-hidden select-none mb-16">
-      {/* Toggle / Trigger Button */}
+    <div className="flex flex-col items-center justify-center min-h-[400px] md:min-h-[600px] w-full p-4 md:p-8 overflow-hidden select-none mb-8 md:mb-16">
+      {/* Toggle / Trigger Button — hidden on mobile */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
         data-cursor-hover
-        className="mb-14 px-5 py-2.5 rounded-full bg-white/5 text-[var(--color-text)] border border-white/10 text-xs font-mono tracking-wider uppercase hover:bg-white/10 transition-all shadow-md active:scale-95"
+        className="hidden md:block mb-14 px-5 py-2.5 rounded-full bg-white/5 text-[var(--color-text)] border border-white/10 text-xs font-mono tracking-wider uppercase hover:bg-white/10 transition-all shadow-md active:scale-95"
       >
         {isExpanded ? "Stack Cards (Collapse)" : "Fan Out Deck (Expand)"}
       </button>
 
-      {/* Cards Deck Container */}
-      <div className="relative w-[280px] h-[380px] flex items-center justify-center">
+      {/* Cards: vertical scroll on mobile, fan deck on desktop */}
+      <div className="flex flex-col gap-4 w-full max-w-[300px] md:max-w-none md:relative md:w-[280px] md:h-[380px] md:flex-col md:gap-0 md:items-center md:justify-center">
         {cards.map((card, index) => {
           const offset = index - middleIndex;
 
@@ -63,7 +63,7 @@ export function ProjectSubCards({ cards }: { cards: SubCard[] }) {
                 damping: 22,
                 mass: 0.8,
               }}
-              className="absolute top-0 left-0 w-[270px] h-[370px] rounded-3xl p-6 cursor-pointer border border-white/10 shadow-2xl bg-[#0f0f11] text-white transition-colors hover:border-white/20"
+              className="relative md:absolute top-0 left-0 w-full md:w-[270px] h-auto md:h-[370px] rounded-3xl p-6 cursor-pointer border border-white/10 shadow-2xl bg-[#0f0f11] text-white transition-colors hover:border-white/20"
             >
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               <Wrapper {...(wrapperProps as any)}>

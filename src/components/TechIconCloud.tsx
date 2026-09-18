@@ -17,9 +17,10 @@ const slugs = [
   "figma",           // Figma UI Design
   "framer",          // Framer Motion & Interactions
   "blender",         // 3D Visuals & Assets
-  "adobexd",         // Adobe UI/UX
+  "canva",           // Canva Design
   "adobephotoshop",  // Photoshop Visual Design
   "adobeaftereffects", // Motion Graphics
+  "adobepremierepro",  // Video Editing
 
   // --- Frontend, 3D & WebGL Frameworks ---
   "typescript",
@@ -30,17 +31,24 @@ const slugs = [
   "tailwindcss",     // Modern Styling
   "html5",
   "css3",
+  "vite",            // Vite Build Tool
 
   // --- Backend, DB & Infrastructure ---
   "nodedotjs",
+  "python",          // Python
   "supabase",        // Database & Backend
   "postgresql",
   "firebase",
+  "mongodb",         // MongoDB
+  "prisma",          // Prisma ORM
   "docker",          // Containerization
   "git",
   "github",
   "vercel",          // Fast Edge Deployment
-  "postman",
+  "googlecloud",     // Google Cloud Platform
+  "stripe",          // Payments
+  "wordpress",       // CMS
+  "notion",          // Productivity
 ];
 
 export function TechIconCloud() {

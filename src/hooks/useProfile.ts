@@ -40,11 +40,18 @@ export function useProfile(): UseProfileReturn {
     setError(null);
 
     try {
-      const { data, error: dbError } = await supabase
-        .from("profile")
-        .select("*")
-        .limit(1)
-        .maybeSingle();
+      const timeoutPromise = new Promise<{ data: any; error: any }>((_, reject) =>
+        setTimeout(() => reject(new Error("Supabase fetch timeout")), 3000)
+      );
+
+      const { data, error: dbError } = await Promise.race([
+        supabase
+          .from("profile")
+          .select("*")
+          .limit(1)
+          .maybeSingle(),
+        timeoutPromise,
+      ]);
 
       if (!isMounted.current) return;
 

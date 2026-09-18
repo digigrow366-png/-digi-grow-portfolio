@@ -44,6 +44,42 @@ const floatingBadges = [
   },
   {
     id: 6,
+    title: "Cursor AI",
+    icon: (
+      <svg className="w-5 h-5 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625z"/>
+      </svg>
+    ),
+    position: "bottom-[8%] left-[15%] md:bottom-[12%] md:left-[18%]",
+    delay: 1.8,
+  },
+  {
+    id: 7,
+    title: "Canva",
+    icon: <Image src="https://cdn.simpleicons.org/canva/00C4CC" alt="Canva" className="w-5 h-5" width={20} height={20} />,
+    position: "bottom-[5%] right-[15%] md:bottom-[10%] md:right-[18%]",
+    delay: 2.0,
+  },
+  {
+    id: 8,
+    title: "CapCut",
+    icon: (
+      <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+      </svg>
+    ),
+    position: "top-[75%] left-[3%] md:top-[78%] md:left-[6%]",
+    delay: 2.4,
+  },
+  {
+    id: 9,
+    title: "Notion",
+    icon: <Image src="https://cdn.simpleicons.org/notion/FFFFFF" alt="Notion" className="w-5 h-5" width={20} height={20} />,
+    position: "top-[80%] right-[3%] md:top-[82%] md:right-[6%]",
+    delay: 2.6,
+  },
+  {
+    id: 10,
     title: "Omni Flash",
     icon: (
       <svg className="w-5 h-5 text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.6)]" viewBox="0 0 24 24" fill="currentColor">
