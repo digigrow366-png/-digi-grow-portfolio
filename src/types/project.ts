@@ -62,37 +62,5 @@ export const FALLBACK_PROJECTS: Project[] = [
     sort_order: 0,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
-  },
-  {
-    id: "seed-2",
-    title: "B-Roll & Video Editing",
-    slug: "b-roll-video-editing",
-    category: "Video Production",
-    summary:
-      "Professional B-Roll footage and video editing services that bring your brand story to life.",
-    cover_image_url: null,
-    gallery: [],
-    sub_cards: [],
-    external_url: null,
-    published: true,
-    sort_order: 1,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  },
-  {
-    id: "seed-3",
-    title: "Brand Identity",
-    slug: "brand-identity",
-    category: "Design",
-    summary:
-      "Comprehensive brand identity packages including logo, color palette, and style guides.",
-    cover_image_url: null,
-    gallery: [],
-    sub_cards: [],
-    external_url: null,
-    published: true,
-    sort_order: 2,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  },
+  }
 ];
